@@ -1,34 +1,30 @@
 import React from 'react'
-import organizeData from '../../util/organizeDataForm'
 import './Table.scss'
-
- export declare interface TableHeader {
+import organizeData from "../../util/organizeDataForTable"
+export interface TableHeader {
   key: string
   value: string
   right?: boolean
 }
+declare interface TableProps {
+  headers: TableHeader[]
+  data: any[]
 
-declare interface TableProps{
-  header:TableHeader[]
-    data: any[]
-
-    enableActions?: boolean
-
-    onDelete?: (intem : any ) => void
-    onDetail?: (intem : any ) => void
-    onEdit?: (intem : any ) => void
+  enableActions?: boolean
   
- }
+  onDelete?: (item : any) => void
+  onDetail?: (item : any) => void
+  onEdit?: (item : any) => void
+}
 
+const Table: React.FC<TableProps> = (props) => {
+  const [organizedData, indexedHeaders] = organizeData(props.data, props.headers)
 
-
-const Table :React.FC<TableProps> = (props) => {
-  const [organizedData, indexedHeaders] = organizeData(props.data, props.header)
   return <table className="AppTable">
     <thead>
       <tr>
         {
-          props.header.map(header =>
+          props.headers.map(header =>
             <th
               className={header.right ? 'right' : ''}
               key={header.key}
