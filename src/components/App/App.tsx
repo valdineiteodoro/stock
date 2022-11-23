@@ -2,10 +2,13 @@ import './App.css';
 import Header from '../Header';
 import Container from '../../shared/Container';
 import Table, { TableHeader } from '../../shared/Table';
-import Products, { Product } from '../../shared/Table/Table.mockdata';
+import { Product } from '../../shared/Table/Table.mockdata';
 import ProductForm, { ProductCreator } from '../Product/ProductForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { getAllProducts } from '../../services/Products.service';
+
+
 
 
 const headers: TableHeader[] = [
@@ -16,28 +19,37 @@ const headers: TableHeader[] = [
 ]
 
 function App() {
-  const [products, setProducts] = useState(Products)
-  const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(products[0])
-  
+  const [products, setProducts] = useState<Product[]>([])
+  const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
+
+  useEffect(() => {
+    async function fetchData() {
+      const _products = await getAllProducts()
+      setProducts(_products)
+    }
+
+    fetchData()
+  }, [])
+
   const handleProductSubmit = (product: ProductCreator) => {
     setProducts([
       ...products,
       {
-        id: products.length + 1,
+        _id:String (products.length + 1),
         ...product
       }
     ])
   }
-   const handleProductUpdate = (newProduct: Product) =>{
-   setProducts(products.map(product =>
-    product.id === newProduct.id 
-    ? newProduct
-    : product
+  const handleProductUpdate = (newProduct: Product) => {
+    setProducts(products.map(product =>
+      product._id === newProduct._id
+        ? newProduct
+        : product
     ))
     setUpdatingProduct(undefined)
-   }
-   const deleteProduct = (id: number) => {
-    setProducts(products.filter(product => product.id !== id))
+  }
+  const deleteProduct = (_id: string) => {
+    setProducts(products.filter(product => product._id !== _id))
   }
 
   const handleProductDelete = (product: Product) => {
@@ -53,7 +65,7 @@ function App() {
       })
       .then((result) => {
         if (result.value) {
-          deleteProduct(product.id)
+          deleteProduct(product._id)
           Swal.fire(
             'Deleted!',
             'Your file has been deleted.',
@@ -79,21 +91,21 @@ function App() {
     <div className="App">
       <Header title="AlgaStock" />
       <Container>
-        <Table 
+        <Table
           headers={headers}
           data={products}
           enableActions
-            onDelete={handleProductDelete}
-            onDetail={handleProductDetail}
-            onEdit={handleProductEdit}
-          
-        /> 
+          onDelete={handleProductDelete}
+          onDetail={handleProductDetail}
+          onEdit={handleProductEdit}
 
-        <ProductForm 
-        
-        form={updatingProduct}
-        onSubmit={handleProductSubmit}
-        onUpdate={handleProductUpdate}
+        />
+
+        <ProductForm
+
+          form={updatingProduct}
+          onSubmit={handleProductSubmit}
+          onUpdate={handleProductUpdate}
         />
       </Container>
     </div>
