@@ -1,6 +1,7 @@
 import React from 'react'
 import './Table.scss'
 import organizeData from "../../util/organizeDataForTable"
+import Button from '../Button'
 export interface TableHeader {
   key: string
   value: string
@@ -32,6 +33,11 @@ const Table: React.FC<TableProps> = (props) => {
               {header.value}
             </th>
           )
+        }{
+        props.enableActions
+        && <th className='right'>
+          Action
+        </th>
         }
       </tr>
     </thead>
@@ -53,6 +59,27 @@ const Table: React.FC<TableProps> = (props) => {
                     : null
                 )
             }
+            {
+              props.enableActions
+              && <td className='Action right'>
+                {
+                  props.onEdit &&
+                   <Button onClick={() => props.onEdit && 
+                   props.onEdit(row)}>
+                    Edit
+                  </Button>}
+                 { props.onDetail && 
+                  <Button onClick={() => props.onDetail && 
+                  props.onDetail(row)}>
+                    Detail
+                  </Button >}
+                  {props.onDelete &&
+                  <Button onClick={() => props.onDelete && 
+                  props.onDelete(row)}>
+                    delete
+                  </Button>}
+                
+              </td>}
           </tr>
         })
       }
