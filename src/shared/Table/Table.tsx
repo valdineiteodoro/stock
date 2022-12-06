@@ -1,6 +1,6 @@
 import React from 'react'
 import './Table.scss'
-import organizeData from "../../util/organizeDataForTable"
+import organizeData from "../../utils/organizeDataForTable"
 import Button from '../Button'
 
 export interface TableHeader {

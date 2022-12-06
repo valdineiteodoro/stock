@@ -1,6 +1,6 @@
 import { ProductCreator } from "../components/Product/ProductForm"
 import { Product } from "../shared/Table/Table.mockdata"
-import http from "../util/http"
+import http from "../utils/http"
 
 export const getAllProducts = () =>
  http

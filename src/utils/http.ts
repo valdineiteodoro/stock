@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 const http = axios.create({
-  baseURL: 'https://localhost:4010',
-  headers:{authorization: 'bearer 132'    
+  baseURL: 'http://localhost:3024',
+  headers: {
+    authorization: 'Bearer 123'
   }
 })
 
