@@ -13,7 +13,9 @@
     "axios": "^1.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-scripts": "5.0.1",
+    "redux": "^4.2.0",
     "sass": "1.54.4",
     "sweetalert2": "^11.6.13",
     "typescript": "^4.9.3",
@@ -47,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-redux": "^7.1.24",
     "eslint-plugin-react-hooks": "^5.0.0-next-d807eb52c-20221205"
   }
 }

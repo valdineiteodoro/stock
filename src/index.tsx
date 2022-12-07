@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App';
 import './index.css';
 import http from './utils/http';
+import store from './redux'
+import { Provider } from 'react-redux';
 
 http.get("/posts")
 http.get("/posts/1")
@@ -14,6 +16,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <Provider store={store} />
     <App />
     </React.StrictMode>
 
